@@ -1,2 +1,12 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+	import Weather from '../components/Weather.svelte';
+</script>
+
+<header>
+	<h1>Welcome to Dashboard!</h1>
+
+	<Weather />
+</header>
+
+<style lang="scss">
+</style>
