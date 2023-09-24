@@ -1,2 +1,11 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+	import SpaceNews from '../components/SpaceNews.svelte';
+	import Weather from '../components/Weather.svelte';
+</script>
+
+<Weather />
+
+<SpaceNews />
+
+<style lang="scss">
+</style>
