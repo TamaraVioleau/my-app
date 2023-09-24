@@ -56,18 +56,40 @@
 		/*From UIGradients*/
 		background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
 		header {
-			display: flex;
+			@media screen and (min-width: 1024px) {
+				display: flex;
+			}
 			img {
 				max-width: 25%;
-				margin-right: 5rem;
+				max-height: 155px;
+				margin-right: 3rem;
+				float: left;
+				position: relative;
+				top: 1rem;
+				@media screen and (min-width: 425px) {
+					top: 0.5rem;
+				}
+				@media screen and (min-width: 425px) {
+					top: 0;
+				}
+				@media screen and (min-width: 1024px) {
+					margin-right: 5rem;
+				}
+			}
+			p {
+				max-width: 600px;
 			}
 		}
 		article {
 			margin-top: 4rem;
+
 			ul {
 				display: grid;
-				grid-template-columns: 1fr 1fr;
+				grid-template-columns: 1fr;
 				gap: 4rem;
+				@media screen and (min-width: 1024px) {
+					grid-template-columns: 1fr 1fr;
+				}
 
 				li {
 					border-color: 1px solid rgba(219, 234, 254, 1);
