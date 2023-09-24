@@ -1,12 +1,11 @@
 <script>
+	import SpaceNews from '../components/SpaceNews.svelte';
 	import Weather from '../components/Weather.svelte';
 </script>
 
-<header>
-	<h1>Welcome to Dashboard!</h1>
+<Weather />
 
-	<Weather />
-</header>
+<SpaceNews />
 
 <style lang="scss">
 </style>

@@ -3,7 +3,7 @@
    License: none (public domain)
 */
 html {
-	font-size: 62.5%; /* 1 rem = 10px */
+	font-size: 62.5% !important; /* 1 rem = 10px */
 }
 
 html,
