@@ -55,7 +55,6 @@
 	header {
 		display: flex;
 		flex-direction: row;
-		width: 80dvw;
 		margin: 2rem auto;
 		padding: 5rem;
 

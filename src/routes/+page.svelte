@@ -3,9 +3,15 @@
 	import Weather from '../components/Weather.svelte';
 </script>
 
-<Weather />
+<div class="container">
+	<Weather />
 
-<SpaceNews />
+	<SpaceNews />
+</div>
 
 <style lang="scss">
+	.container {
+		width: 80dvw;
+		margin: 0 auto;
+	}
 </style>

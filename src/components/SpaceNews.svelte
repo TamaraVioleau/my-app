@@ -5,17 +5,29 @@
 	let spaceNews;
 	let timers = {};
 
+	//Fonction de calcul du temps restant
 	function calculateTimeLeft(launchDate) {
-		const now = new Date();
-		const difference = new Date(launchDate) - now;
+		const MS_PER_DAY = 24 * 60 * 60 * 1000;
+		const MS_PER_HOUR = 60 * 60 * 1000;
+		const MS_PER_MINUTE = 60 * 1000;
 
-		const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-		const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-		const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-		const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+		let remainingTime = new Date(launchDate) - new Date();
+
+		const days = Math.floor(remainingTime / MS_PER_DAY);
+		remainingTime %= MS_PER_DAY;
+
+		const hours = Math.floor(remainingTime / MS_PER_HOUR);
+		remainingTime %= MS_PER_HOUR;
+
+		const minutes = Math.floor(remainingTime / MS_PER_MINUTE);
+		remainingTime %= MS_PER_MINUTE;
+
+		const seconds = Math.floor(remainingTime / 1000);
+
 		return `${days}d ${hours}h ${minutes}m ${seconds}s`;
 	}
 
+	//Récupération des articles depuis l'API
 	onMount(async () => {
 		try {
 			spaceNews = await fetchSpaceNews();
@@ -36,6 +48,11 @@
 			clearInterval(interval);
 		};
 	});
+
+	//Formatage de la date
+	function formatDate(date) {
+		return new Date(date).toLocaleDateString('fr-FR');
+	}
 </script>
 
 <section>
@@ -54,27 +71,33 @@
 			<ul>
 				{#each spaceNews as news}
 					<li>
-						<p>{news.name}</p>
-						<p>Status : {news.status.name}</p>
-						{#if news.pad && news.pad.location}
-							<p>Lieu : {news.pad.location.name}</p>
-						{/if}
-						<p>Date d'arrivée: {news.net}</p>
-						<p>Temps restant: {timers[news.id]}</p>
+						<img src={news.image} alt="" />
+						<div>
+							<h3>{news.name}</h3>
+							<p>Status : {news.status.name}</p>
+							{#if news.pad && news.pad.location}
+								<p>Lieu : {news.pad.location.name}</p>
+							{/if}
+							<p>Date d'arrivée : {formatDate(news.net)}</p>
+
+							<p>Temps restant : {timers[news.id]}</p>
+						</div>
 					</li>
 				{/each}
 			</ul>
 		</article>
 	{:else}
-		<p>Loading...</p>
+		<p>Chargement des lancements ...</p>
 	{/if}
 </section>
 
 <style lang="scss">
 	section {
-		width: 80dvw;
 		margin: 2rem auto;
-		padding: 5rem;
+		padding: 3rem;
+		@media screen and (min-width: 768px) {
+			padding: 5rem;
+		}
 		/* From https://css.glass */
 		background: rgba(255, 255, 255, 0.2);
 		border-radius: 16px;
@@ -114,16 +137,37 @@
 				display: grid;
 				grid-template-columns: 1fr;
 				gap: 4rem;
-				@media screen and (min-width: 1024px) {
+				@media screen and (min-width: 1440px) {
 					grid-template-columns: 1fr 1fr;
 				}
 
 				li {
+					display: flex;
+					flex-direction: column;
+					@media screen and (min-width: 768px) {
+						display: grid;
+						grid-template-columns: 30% 1fr;
+					}
 					border-color: 1px solid rgba(219, 234, 254, 1);
 					border-radius: 1rem;
 					background-color: rgba(255, 255, 255, 1);
-					padding: 4rem;
-					max-width: 90%;
+
+					img {
+						width: 100%;
+						max-height: 200px;
+						object-fit: cover;
+						object-position: top;
+						@media screen and (min-width: 768px) {
+							max-height: 100%;
+							height: 100%;
+						}
+					}
+					div {
+						padding: 2rem;
+						@media screen and (min-width: 768px) {
+							padding: 4rem;
+						}
+					}
 				}
 			}
 		}
