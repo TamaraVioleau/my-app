@@ -1,4 +1,5 @@
 <script>
+	import Weather from './Weather.svelte';
 	import { onMount } from 'svelte';
 	import { fetchLocationData, fetchWeatherData } from '../api/weather';
 
@@ -31,18 +32,20 @@
 </script>
 
 <header>
-	<div>
+	<div class="time-weather-container">
 		<h1>Welcome to Dashboard!</h1>
-		<div>
+		<p class="time">{currentTime}</p>
+
+		<div class="weather-info">
 			{#if weatherData && locationName}
-				<p>
-					{locationName}: {weatherData.WeatherText}, Temperature: {weatherData.Temperature.Metric
-						.Value}°C
-				</p>
+				<p class="temperature">{weatherData.Temperature.Metric.Value}°C</p>
+				<div>
+					<p class="location">{locationName}</p>
+					<p class="weather">{weatherData.WeatherText}</p>
+				</div>
 			{:else}
 				<p>Loading...</p>
 			{/if}
-			<p>Heure locale : {currentTime}</p>
 		</div>
 		<img src="./img/woman_weather.png" alt="" />
 	</div>
@@ -83,6 +86,20 @@
 			max-height: 100%;
 			right: 0;
 			margin-right: 5rem;
+		}
+
+		.time {
+			margin-bottom: 2rem;
+		}
+		.weather-info {
+			display: flex;
+			.temperature {
+				font-size: 3rem;
+				margin-right: 1px solid grey;
+				padding-right: 1rem;
+			}
+			div {
+			}
 		}
 	}
 </style>

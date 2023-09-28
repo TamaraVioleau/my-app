@@ -3,6 +3,18 @@
 	import { fetchSpaceNews } from '../api/SpaceNews'; // Ajustez le chemin ici
 
 	let spaceNews;
+	let timers = {};
+
+	function calculateTimeLeft(launchDate) {
+		const now = new Date();
+		const difference = new Date(launchDate) - now;
+
+		const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+		const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+		const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+		return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+	}
 
 	onMount(async () => {
 		try {
@@ -10,6 +22,19 @@
 		} catch (error) {
 			console.error('Failed to fetch space news:', error);
 		}
+
+		const interval = setInterval(() => {
+			if (spaceNews) {
+				spaceNews.forEach((news) => {
+					timers[news.id] = calculateTimeLeft(news.net);
+				});
+				timers = { ...timers };
+			}
+		}, 1000);
+
+		return () => {
+			clearInterval(interval);
+		};
 	});
 </script>
 
@@ -30,10 +55,12 @@
 				{#each spaceNews as news}
 					<li>
 						<p>{news.name}</p>
-						<p>Status: {news.status.name}</p>
+						<p>Status : {news.status.name}</p>
 						{#if news.pad && news.pad.location}
-							<p>Lieu: {news.pad.location.name}</p>
+							<p>Lieu : {news.pad.location.name}</p>
 						{/if}
+						<p>Date d'arrivée: {news.net}</p>
+						<p>Temps restant: {timers[news.id]}</p>
 					</li>
 				{/each}
 			</ul>
