@@ -1,5 +1,6 @@
 h1,
 h2,
+h3,
 p {
 	font-family: 'Lexend', sans-serif;
 }
@@ -13,6 +14,13 @@ h1 {
 
 h2 {
 	font-size: 2.5rem;
+	margin-bottom: 2rem;
+	font-weight: 600;
+	line-height: 3rem;
+}
+
+h3 {
+	font-size: 2rem;
 	margin-bottom: 2rem;
 	font-weight: 600;
 	line-height: 3rem;
